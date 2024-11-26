@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Test Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    canvas {
+      width: 800px !important; /* Increased width */
+      height: 500px !important; /* Increased height */
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Performance Test Comparison</h1>
+  <p>Comparing performance before and after the code change</p>
+  <p>2023.3 vs. 2024.3</p>
+  <canvas id="performanceChart"></canvas>
+  <script>
+    // Data for performance testing
+    const beforeChange = [2.5500, 2.080, 1.800, 1.910, 2.000];
+    const afterChange = [1.740, 1.440, 1.320, 1.117, 1.430];
+
+    // Determine the max value for the Y-axis
+    const maxValue = Math.max(...beforeChange, ...afterChange) + 1;
+
+    // Labels for the data points
+    const labels = ['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5'];
+
+    // Create the bar chart
+    const ctx = document.getElementById('performanceChart').getContext('2d');
+    const performanceChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Before Code Change',
+            data: beforeChange,
+            backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          },
+          {
+            label: 'After Code Change',
+            data: afterChange,
+            backgroundColor: 'rgba(75, 192, 192, 0.7)', // Teal
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top'
+          },
+          title: {
+            display: true,
+            text: 'Performance Test Results - Change Orders - Select in Listview'
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: maxValue, // Dynamic max value
+            ticks: {
+              stepSize: 0.5, // Set intervals of 0.5 milliseconds
+              callback: function(value) {
+                return value + ' s'; // Append "ms" to the tick labels
+              }
+            },
+            title: {
+              display: true,
+              text: 'Time (s)'
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Test Cases'
+            },
+            barPercentage: 0.7, // Adjust bar width
+            categoryPercentage: 0.8 // Adjust category spacing
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
